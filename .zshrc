@@ -123,7 +123,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 #######
 figlet "NEWT6611" | lolcat
 
-alias docker="/opt/homebrew/Cellar/docker/26.1.0/bin/docker"
+alias docker="/opt/homebrew/Cellar/docker/27.3.1/bin/docker"
 
 alias ze="zellij"
 

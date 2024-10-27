@@ -119,6 +119,7 @@ source <(ng completion script)
 
 
 export XDG_CONFIG_HOME="$HOME/.config"
+# export TERM = "xterm-256color"
 
 #######
 figlet "NEWT6611" | lolcat

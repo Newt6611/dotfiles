@@ -16,5 +16,7 @@ config.enable_tab_bar = false
 config.window_background_opacity = 0.95
 config.color_scheme = 'Sex Colors (terminal.sexy)'
 
+-- config.term = 'wezterm'
+
 -- and finally, return the configuration to wezterm
 return config

@@ -13,7 +13,7 @@ config.font = wezterm.font 'JetBrainsMono Nerd Font Mono'
 config.font_size = 24
 
 config.enable_tab_bar = false
-config.window_background_opacity = 0.95
+config.window_background_opacity = 1
 config.color_scheme = 'Sex Colors (terminal.sexy)'
 
 -- config.term = 'wezterm'

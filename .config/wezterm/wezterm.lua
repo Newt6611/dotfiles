@@ -6,7 +6,7 @@ local config = wezterm.config_builder()
 
 config.default_prog = { '/bin/zsh', '-l', '-c', 'zellij -l welcome' }
 
-config.max_fps = 120
+config.max_fps = 60
 config.window_decorations = 'RESIZE'
 config.color_scheme = 'Batman'
 

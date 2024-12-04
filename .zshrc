@@ -114,10 +114,6 @@ source $ZSH/oh-my-zsh.sh
 
 eval "$(zoxide init --cmd cd zsh)"
 
-# Load Angular CLI autocompletion.
-source <(ng completion script)
-
-
 export XDG_CONFIG_HOME="$HOME/.config"
 # export TERM = "xterm-256color"
 
@@ -126,11 +122,8 @@ figlet "NEWT6611" | lolcat
 
 alias docker="/opt/homebrew/Cellar/docker/27.3.1/bin/docker"
 
-alias ze="zellij"
-
 alias lg="lazygit"
 alias nv="nvim"
-alias icat="kitten icat"
 
 alias ls="exa"
 alias ll="exa -alh"
@@ -149,3 +142,4 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+source ~/powerlevel10k/powerlevel10k.zsh-theme

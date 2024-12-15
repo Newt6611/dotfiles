@@ -4,5 +4,6 @@ return {
 	{ "stevearc/dressing.nvim", enabled = false },
 	{ "goolord/alpha-nvim", enabled = false },
 	{ "nvim-neo-tree/neo-tree.nvim", enabled = false },
-	{ "akinsho/bufferline.nvim", enabled = false }
+	{ "akinsho/bufferline.nvim", enabled = false },
+    { "ggandor/leap.nvim", enabled = false }
 }

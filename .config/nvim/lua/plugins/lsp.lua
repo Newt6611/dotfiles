@@ -22,6 +22,12 @@ return {
 					vim.lsp.buf.implementation()
 				end,
 			}
+            keys[#keys + 1] = {
+                "gt",
+                function ()
+                    vim.lsp.buf.type_definition()
+                end,
+            }
 		end,
 		opts = {
 			inlay_hints = { enabled = false },

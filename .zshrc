@@ -12,6 +12,8 @@ fi
 export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:/opt/homebrew/Cellar/docker/26.1.0/bin/
 export PATH=$PATH:/opt/homebrew/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -142,4 +144,3 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-source ~/powerlevel10k/powerlevel10k.zsh-theme

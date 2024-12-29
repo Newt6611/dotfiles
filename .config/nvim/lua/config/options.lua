@@ -19,3 +19,12 @@ vim.opt.incsearch = true
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "typescript", "javascript" },
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.softtabstop = 2
+  end,
+})

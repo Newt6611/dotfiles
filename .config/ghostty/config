@@ -1,0 +1,19 @@
+
+font-family = JetBrainsMono Nerd Font Mono
+
+theme = Adventure
+
+font-size = 24
+
+shell-integration-features = no-cursor
+
+cursor-style = block
+
+background-opacity = 0.85
+background-blur-radius = 15
+
+window-decoration = false
+
+window-save-state = always
+
+initial-command = /bin/zsh -l -c 'zellij -l welcome'

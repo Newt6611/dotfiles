@@ -6,7 +6,7 @@ layout {
                     format_center ""
                     format_right  "{swap_layout}#[bg=#181926,fg=#494d64] Zellij: #[bg=#181926,fg=#494d64]{session}"
                     format_space  "#[bg=#181926]"
-                    format_hide_on_overlength "true"
+                    format_hide_on_overlength "false"
                     format_precedence "crl"
 
                     border_enabled  "false"

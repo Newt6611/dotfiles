@@ -49,14 +49,7 @@ keybinds clear-defaults=true {
         bind "l" { GoToNextTab; }
         bind "n" { NewTab; SwitchToMode "normal"; }
         bind "r" { SwitchToMode "renametab"; TabNameInput 0; }
-        bind "s" {
-            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/room.wasm" {
-            floating true
-            ignore_case true
-            quick_jump true
-        }; SwitchToMode "normal"; }
-
-        // bind "s" { ToggleActiveSyncTab; SwitchToMode "normal"; }
+        bind "s" { ToggleActiveSyncTab; SwitchToMode "normal"; }
         bind "Ctrl t" { SwitchToMode "normal"; }
         bind "x" { CloseTab; SwitchToMode "normal"; }
         bind "tab" { ToggleTab; }
@@ -96,6 +89,12 @@ keybinds clear-defaults=true {
     scroll {
         bind "e" { EditScrollback; SwitchToMode "normal"; }
         bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
+        bind "d" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/room.wasm" {
+            floating true
+            ignore_case true
+            quick_jump true
+        }; SwitchToMode "normal"; }
     }
     search {
         bind "c" { SearchToggleOption "CaseSensitivity"; }
@@ -291,7 +290,7 @@ load_plugins {
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-// default_layout "compact"
+default_layout "default"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)

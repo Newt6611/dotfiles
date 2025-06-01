@@ -9,8 +9,8 @@ shell-integration-features = no-cursor
 
 cursor-style = block
 
-background-opacity = 1
-background-blur-radius = 50
+background-opacity = 0.85
+background-blur-radius = 20
 
 window-decoration = false
 

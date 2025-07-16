@@ -10,9 +10,7 @@ fi
 
 
 export PATH=/usr/local/bin:$PATH
-export PATH=$PATH:/opt/homebrew/Cellar/docker/26.1.0/bin/
 export PATH=$PATH:/opt/homebrew/bin
-export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -120,27 +118,13 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # export TERM = "xterm-256color"
 
 #######
-figlet "NEWT6611" | lolcat
-
-alias docker="/opt/homebrew/Cellar/docker/27.3.1/bin/docker"
-
 alias lg="lazygit"
 alias nv="nvim"
 
 alias ls="exa"
 alias ll="exa -alh"
 alias tree="exa --tree"
-alias storage="duf"
-eval $(thefuck --alias fk)
 #######
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# pnpm
-export PNPM_HOME="/Users/newt/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end

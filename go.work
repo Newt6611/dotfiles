@@ -1,0 +1,11 @@
+go 1.24.6
+
+use (
+	./pkg/models
+	./services/api
+	./services/engine
+	./services/price
+	./services/sequencer
+	./services/validators
+	./services/watchers
+)

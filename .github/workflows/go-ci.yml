@@ -1,0 +1,63 @@
+name: Go Monorepo CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tidy-build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module:
+          - pkg/models
+          - services/api
+          - services/engine
+          - services/price
+          - services/sequencer
+          - services/validators
+          - services/watchers
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+
+    - name: Cache Go modules
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/go-build
+          ${{ matrix.module }}/go.sum
+        key: ${{ runner.os }}-go-${{ hashFiles('${{ matrix.module }}/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Install dependencies
+      working-directory: ${{ matrix.module }}
+      run: |
+        go mod tidy
+        go mod download
+
+    - name: Build (skip if no packages)
+      working-directory: ${{ matrix.module }}
+      run: |
+        if go list ./... | grep -q .; then
+          go build ./...
+        else
+          echo "No packages to build in ${{ matrix.module }}"
+        fi
+
+    - name: Run tests (skip if no packages)
+      working-directory: ${{ matrix.module }}
+      run: |
+        if go list ./... | grep -q .; then
+          go test -v ./...
+        else
+          echo "No packages to test in ${{ matrix.module }}"
+        fi

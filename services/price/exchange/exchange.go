@@ -1,7 +1,10 @@
 // Package exchange provides an exchange interface.
 package exchange
 
-import "time"
+import (
+	"github.com/govalues/decimal"
+	"time"
+)
 
 type ExchangeType string
 
@@ -17,7 +20,7 @@ type PriceFeed struct {
 	Exchange    string
 	Pair        string
 	TimeInMilli int64
-	Price       float64
+	Price       decimal.Decimal
 }
 
 type Exchange interface {

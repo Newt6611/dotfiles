@@ -3,10 +3,10 @@ package binance
 
 import (
 	"encoding/json"
-	"strconv"
 
 	"github.com/charmbracelet/log"
 	"github.com/gorilla/websocket"
+	"github.com/govalues/decimal"
 	"github.com/strike-finance/strike-v2-backend/services/price/config"
 	"github.com/strike-finance/strike-v2-backend/services/price/exchange"
 )
@@ -87,7 +87,7 @@ func (b *Binance) Active(priceFeedCh chan<- exchange.PriceFeed) {
 				continue
 			}
 
-			price, _ := strconv.ParseFloat(aggTrade.Price, 64)
+			price, _ := decimal.Parse(aggTrade.Price)
 			priceFeedCh <- exchange.PriceFeed{
 				Exchange:    b.GetName(),
 				Pair:        aggTrade.Symbol,

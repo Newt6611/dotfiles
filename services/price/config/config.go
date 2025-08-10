@@ -9,7 +9,7 @@ import (
 
 type Config struct {
 	Pairs      []string `mapstructure:"PAIRS"`
-	BinanceWss string   `mapstructure:"BINANCE_WSS"`
+	BinanceWss []string `mapstructure:"BINANCE_WSS"`
 }
 
 func Init() *Config {

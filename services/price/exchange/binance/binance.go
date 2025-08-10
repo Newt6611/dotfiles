@@ -12,16 +12,18 @@ import (
 )
 
 type Binance struct {
-	config *config.Config
-	pairs  []string
-	doneCh chan struct{}
+	config             *config.Config
+	pairs              []string
+	doneCh             chan struct{}
+	currentEndpointIdx int
 }
 
 func New(config *config.Config) *Binance {
 	return &Binance{
-		config: config,
-		pairs:  formatPair(config.Pairs),
-		doneCh: make(chan struct{}),
+		config:             config,
+		pairs:              formatPair(config.Pairs),
+		doneCh:             make(chan struct{}),
+		currentEndpointIdx: 0,
 	}
 }
 
@@ -38,7 +40,8 @@ func (b *Binance) Active(priceFeedCh chan<- exchange.PriceFeed) {
 		default:
 		}
 
-		c, _, err := websocket.DefaultDialer.Dial(b.config.BinanceWss, nil)
+		endpoint := b.getWssEndpoint()
+		c, _, err := websocket.DefaultDialer.Dial(endpoint, nil)
 		if err != nil {
 			exchange.WsReconnectWait(b.GetName(), "Dial: "+err.Error())
 			continue
@@ -102,4 +105,12 @@ func (b *Binance) Shutdown() {
 	default:
 		close(b.doneCh)
 	}
+}
+
+func (b *Binance) getWssEndpoint() string {
+	b.currentEndpointIdx++
+	if b.currentEndpointIdx >= len(b.config.BinanceWss) {
+		b.currentEndpointIdx = 0
+	}
+	return b.config.BinanceWss[b.currentEndpointIdx]
 }

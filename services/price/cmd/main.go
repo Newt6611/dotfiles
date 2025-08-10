@@ -64,12 +64,7 @@ func main() {
 				log.Info(msg)
 
 				// Push price event to sequencer
-				sequencerClient.PushPriceEvent(models.PriceEvent{
-					Exchange:  priceFeed.Exchange,
-					Pair:      priceFeed.Pair,
-					Price:     priceFeed.Price,
-					Timestamp: priceFeed.TimeInMilli,
-				})
+				PushPriceEvent(sequencerClient, priceFeed)
 			}
 		}
 	}()
@@ -101,4 +96,13 @@ func ShutdownAllExchanges(exchanges []exchange.Exchange) {
 	for _, exchange := range exchanges {
 		exchange.Shutdown()
 	}
+}
+
+func PushPriceEvent(s *sequencer.Sequencer, priceFeed exchange.PriceFeed) {
+	s.PushPriceEvent(models.PriceEvent{
+		Exchange:  priceFeed.Exchange,
+		Pair:      priceFeed.Pair,
+		Price:     priceFeed.Price,
+		Timestamp: priceFeed.TimeInMilli,
+	})
 }

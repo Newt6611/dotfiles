@@ -8,9 +8,12 @@ import (
 	"syscall"
 
 	"github.com/charmbracelet/log"
+	"github.com/strike-finance/strike-v2-backend/pkg/models"
 	"github.com/strike-finance/strike-v2-backend/services/price/config"
 	"github.com/strike-finance/strike-v2-backend/services/price/exchange"
 	"github.com/strike-finance/strike-v2-backend/services/price/exchange/binance"
+	"github.com/strike-finance/strike-v2-backend/services/price/redis"
+	"github.com/strike-finance/strike-v2-backend/services/sequencer/sequencer"
 )
 
 func main() {
@@ -20,6 +23,12 @@ func main() {
 
 	// Init config
 	cfg := config.Init()
+
+	// Init redis client
+	redisClient := redis.NewClient(cfg)
+
+	// Sequencer client
+	sequencerClient := sequencer.New(redisClient.GetClient())
 
 	// Setup all exchanges
 	exchanges := []exchange.Exchange{
@@ -53,7 +62,14 @@ func main() {
 				}
 				msg := fmt.Sprintf("Exchange: %s Pair: %s Price: %f", priceFeed.Exchange, priceFeed.Pair, priceFeed.Price)
 				log.Info(msg)
-				// TODO: Push to sequencer
+
+				// Push price event to sequencer
+				sequencerClient.PushPriceEvent(models.PriceEvent{
+					Exchange:  priceFeed.Exchange,
+					Pair:      priceFeed.Pair,
+					Price:     priceFeed.Price,
+					Timestamp: priceFeed.TimeInMilli,
+				})
 			}
 		}
 	}()

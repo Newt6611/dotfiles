@@ -10,6 +10,7 @@ import (
 type Config struct {
 	Pairs      []string `mapstructure:"PAIRS"`
 	BinanceWss []string `mapstructure:"BINANCE_WSS"`
+	RedisURL   string   `mapstructure:"REDIS_URL"`
 }
 
 func Init() *Config {

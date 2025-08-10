@@ -1,0 +1,88 @@
+package main
+
+import (
+	"fmt"
+	"os"
+	"os/signal"
+	"sync"
+	"syscall"
+
+	"github.com/charmbracelet/log"
+	"github.com/strike-finance/strike-v2-backend/services/price/config"
+	"github.com/strike-finance/strike-v2-backend/services/price/exchange"
+	"github.com/strike-finance/strike-v2-backend/services/price/exchange/binance"
+)
+
+func main() {
+	var wg sync.WaitGroup
+
+	log.Info("Service Price Started")
+
+	// Init config
+	cfg := config.Init()
+
+	// Setup all exchanges
+	exchanges := []exchange.Exchange{
+		binance.New(cfg),
+	}
+
+	// Create priceFeed channel for receiving price feed from all exchanges
+	priceFeedCh := make(chan exchange.PriceFeed, 1)
+
+	// Active all exchanges
+	ActiveAllExchanges(exchanges, priceFeedCh)
+
+	wg.Add(1)
+
+	doneCh := make(chan struct{})
+
+	// Start price feed loop
+	go func() {
+		defer wg.Done()
+
+		var lastTimeUpdated int64 = 0
+		for {
+			select {
+			case <-doneCh:
+				log.Info("Price feed loop stopped")
+				return
+
+			case priceFeed := <-priceFeedCh:
+				if priceFeed.TimeInMilli <= lastTimeUpdated {
+					continue
+				}
+				msg := fmt.Sprintf("Exchange: %s Pair: %s Price: %f", priceFeed.Exchange, priceFeed.Pair, priceFeed.Price)
+				log.Info(msg)
+				// TODO: Push to sequencer
+			}
+		}
+	}()
+
+	// Handle signal like Ctrl+C
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
+
+	<-sigCh
+
+	log.Info("Shutting down service price...")
+
+	ShutdownAllExchanges(exchanges)
+
+	// Waiting for price feed loop closed
+	close(doneCh)
+	wg.Wait()
+
+	log.Info("Shutdown complete")
+}
+
+func ActiveAllExchanges(exchanges []exchange.Exchange, priceFeedCh chan<- exchange.PriceFeed) {
+	for _, exchange := range exchanges {
+		go exchange.Active(priceFeedCh)
+	}
+}
+
+func ShutdownAllExchanges(exchanges []exchange.Exchange) {
+	for _, exchange := range exchanges {
+		exchange.Shutdown()
+	}
+}

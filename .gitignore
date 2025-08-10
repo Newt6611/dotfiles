@@ -26,3 +26,4 @@ go.work.sum
 
 .envrc
 *.local
+services/price/.env

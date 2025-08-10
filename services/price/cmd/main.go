@@ -26,9 +26,7 @@ func main() {
 
 	// Init redis client
 	redisClient := redis.NewClient(cfg)
-
-	// Sequencer client
-	sequencerClient := sequencer.New(redisClient.GetClient())
+	_ = redisClient
 
 	// Setup all exchanges
 	exchanges := []exchange.Exchange{
@@ -64,7 +62,8 @@ func main() {
 				log.Info(msg)
 
 				// Push price event to sequencer
-				PushPriceEvent(sequencerClient, priceFeed)
+				// TODO: This should happend in sequencer
+				// PushPriceEvent(sequencerClient, priceFeed)
 			}
 		}
 	}()

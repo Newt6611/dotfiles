@@ -2,26 +2,27 @@
 package binance
 
 import (
-	"encoding/json"
+	"context"
+	"time"
 
+	"github.com/adshao/go-binance/v2"
 	"github.com/charmbracelet/log"
-	"github.com/gorilla/websocket"
 	"github.com/govalues/decimal"
 	"github.com/strike-finance/strike-v2-backend/services/price/config"
 	"github.com/strike-finance/strike-v2-backend/services/price/exchange"
 )
 
 type Binance struct {
+	client             *binance.Client
 	config             *config.Config
-	pairs              []string
 	doneCh             chan struct{}
 	currentEndpointIdx int
 }
 
 func New(config *config.Config) *Binance {
 	return &Binance{
+		client:             binance.NewClient("", ""),
 		config:             config,
-		pairs:              formatPair(config.Pairs),
 		doneCh:             make(chan struct{}),
 		currentEndpointIdx: 0,
 	}
@@ -32,6 +33,7 @@ func (b *Binance) GetName() string {
 }
 
 func (b *Binance) Active(priceFeedCh chan<- exchange.PriceFeed) {
+	ticker := time.NewTicker(exchange.PriceFeedInterval)
 	for {
 		select {
 		case <-b.doneCh:
@@ -40,62 +42,25 @@ func (b *Binance) Active(priceFeedCh chan<- exchange.PriceFeed) {
 		default:
 		}
 
-		endpoint := b.getWssEndpoint()
-		c, _, err := websocket.DefaultDialer.Dial(endpoint, nil)
+		endpoint := b.getEndpoint()
+		b.client.SetApiEndpoint(endpoint)
+
+		symbols, err := b.client.NewListPricesService().Symbols(b.config.Pairs).Do(context.Background())
 		if err != nil {
-			exchange.WsReconnectWait(b.GetName(), "Dial: "+err.Error())
-			continue
+			log.Error(err)
 		}
 
-		// Send subscription JSON
-		subMsg := Subscribe{
-			Method: "SUBSCRIBE",
-			Params: b.pairs,
-			ID:     1,
-		}
-
-		if err := c.WriteJSON(subMsg); err != nil {
-			c.Close()
-			exchange.WsReconnectWait(b.GetName(), "Subscribe: "+err.Error())
-			continue
-		}
-
-		for {
-			select {
-			case <-b.doneCh:
-				log.Info("Binance price feed loop stopped")
-				c.Close()
-				return
-			default:
-			}
-
-			_, respMsg, err := c.ReadMessage()
-			if err != nil {
-				c.Close()
-				exchange.WsReconnectWait(b.GetName(), "Read: "+err.Error())
-				goto reconnect
-			}
-
-			var aggTrade AggTrade
-			err = json.Unmarshal(respMsg, &aggTrade)
-			if err != nil {
-				log.Warn("Binance unmarshal:", err)
-				continue
-			}
-
-			if aggTrade.EventType != string(EventTypeAggTrade) {
-				continue
-			}
-
-			price, _ := decimal.Parse(aggTrade.Price)
+		for _, symbol := range symbols {
+			price, _ := decimal.Parse(symbol.Price)
 			priceFeedCh <- exchange.PriceFeed{
 				Exchange:    b.GetName(),
-				Pair:        aggTrade.Symbol,
-				TimeInMilli: aggTrade.EventTime,
+				Pair:        symbol.Symbol,
+				TimeInMilli: time.Now().UnixMilli(),
 				Price:       price,
 			}
 		}
-	reconnect:
+
+		<-ticker.C
 	}
 }
 
@@ -107,10 +72,10 @@ func (b *Binance) Shutdown() {
 	}
 }
 
-func (b *Binance) getWssEndpoint() string {
+func (b *Binance) getEndpoint() string {
 	b.currentEndpointIdx++
-	if b.currentEndpointIdx >= len(b.config.BinanceWss) {
+	if b.currentEndpointIdx >= len(b.config.BinanceEndpoints) {
 		b.currentEndpointIdx = 0
 	}
-	return b.config.BinanceWss[b.currentEndpointIdx]
+	return b.config.BinanceEndpoints[b.currentEndpointIdx]
 }

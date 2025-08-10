@@ -13,7 +13,7 @@ const (
 )
 
 const (
-	ReconnectInterval = time.Second * 5
+	PriceFeedInterval = time.Second * 1
 )
 
 type PriceFeed struct {

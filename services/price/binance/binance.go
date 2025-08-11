@@ -8,19 +8,18 @@ import (
 	"github.com/adshao/go-binance/v2"
 	"github.com/charmbracelet/log"
 	"github.com/govalues/decimal"
-	"github.com/strike-finance/strike-v2-backend/services/price/config"
-	"github.com/strike-finance/strike-v2-backend/services/price/exchange"
+	"github.com/strike-finance/strike-v2-backend/services/price"
 )
 
 type Binance struct {
 	client             *binance.Client
-	config             *config.Config
+	config             *price.Config
 	pairs              []string
 	doneCh             chan struct{}
 	currentEndpointIdx int
 }
 
-func New(config *config.Config) *Binance {
+func New(config *price.Config) *Binance {
 	return &Binance{
 		client:             binance.NewClient("", ""),
 		config:             config,
@@ -34,8 +33,8 @@ func (b *Binance) GetName() string {
 	return "Binance"
 }
 
-func (b *Binance) Active(priceFeedCh chan<- exchange.PriceFeed) {
-	ticker := time.NewTicker(exchange.PriceFeedInterval)
+func (b *Binance) Active(priceFeedCh chan<- price.PriceFeed) {
+	ticker := time.NewTicker(price.PriceFeedInterval)
 	for {
 		select {
 		case <-b.doneCh:
@@ -54,12 +53,12 @@ func (b *Binance) Active(priceFeedCh chan<- exchange.PriceFeed) {
 		}
 
 		for _, symbol := range symbols {
-			price, _ := decimal.Parse(symbol.Price)
-			priceFeedCh <- exchange.PriceFeed{
+			newPrice, _ := decimal.Parse(symbol.Price)
+			priceFeedCh <- price.PriceFeed{
 				Exchange:    b.GetName(),
 				Pair:        symbol.Symbol,
 				TimeInMilli: time.Now().UnixMilli(),
-				Price:       price,
+				Price:       newPrice,
 			}
 		}
 

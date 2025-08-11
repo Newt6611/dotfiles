@@ -3,6 +3,7 @@ go 1.24.6
 use (
 	./pkg/consts
 	./pkg/models
+	./pkg/redis
 	./services/api
 	./services/engine
 	./services/price

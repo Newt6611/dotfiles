@@ -1,5 +1,5 @@
-// Package exchange provides an exchange interface.
-package exchange
+// Package price
+package price
 
 import (
 	"github.com/govalues/decimal"

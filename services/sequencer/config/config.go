@@ -8,6 +8,7 @@ import (
 )
 
 type Config struct {
+	RedisURL         string   `mapstructure:"REDIS_URL"`
 	Pairs            []string `mapstructure:"PAIRS"`
 	BinanceEndpoints []string `mapstructure:"BINANCE_ENDPOINTS"`
 	OKXEndpoint      string   `mapstructure:"OKX_ENDPOINT"`
@@ -29,3 +30,4 @@ func Init() *Config {
 
 	return &cfg
 }
+

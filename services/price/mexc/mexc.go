@@ -6,18 +6,17 @@ import (
 
 	"github.com/charmbracelet/log"
 	"github.com/govalues/decimal"
-	"github.com/strike-finance/strike-v2-backend/services/price/config"
-	"github.com/strike-finance/strike-v2-backend/services/price/exchange"
+	"github.com/strike-finance/strike-v2-backend/services/price"
 )
 
 type Mexc struct {
-	config     *config.Config
+	config     *price.Config
 	pairs      []string
 	doneCh     chan struct{}
 	pairsCache map[string]bool // Optimize filter speed when fetch prices back from OKX
 }
 
-func New(config *config.Config) *Mexc {
+func New(config *price.Config) *Mexc {
 	formattedPairs := formatPairs(config.Pairs)
 	pairsCache := make(map[string]bool)
 	for _, pair := range formattedPairs {
@@ -35,8 +34,8 @@ func (b *Mexc) GetName() string {
 	return "Mexc"
 }
 
-func (b *Mexc) Active(priceFeedCh chan<- exchange.PriceFeed) {
-	ticker := time.NewTicker(exchange.PriceFeedInterval)
+func (b *Mexc) Active(priceFeedCh chan<- price.PriceFeed) {
+	ticker := time.NewTicker(price.PriceFeedInterval)
 	for {
 		select {
 		case <-b.doneCh:
@@ -57,12 +56,12 @@ func (b *Mexc) Active(priceFeedCh chan<- exchange.PriceFeed) {
 				continue
 			}
 
-			price, _ := decimal.Parse(symbol.Price)
-			priceFeedCh <- exchange.PriceFeed{
+			newPrice, _ := decimal.Parse(symbol.Price)
+			priceFeedCh <- price.PriceFeed{
 				Exchange:    b.GetName(),
 				Pair:        symbol.Symbol,
 				TimeInMilli: time.Now().UnixMilli(),
-				Price:       price,
+				Price:       newPrice,
 			}
 		}
 

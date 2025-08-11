@@ -1,4 +1,4 @@
-// Package mexc
+// Package okx
 package okx
 
 import (
@@ -7,17 +7,16 @@ import (
 
 	"github.com/charmbracelet/log"
 	"github.com/govalues/decimal"
-	"github.com/strike-finance/strike-v2-backend/services/price/config"
-	"github.com/strike-finance/strike-v2-backend/services/price/exchange"
+	"github.com/strike-finance/strike-v2-backend/services/price"
 )
 
 type OKX struct {
-	config     *config.Config
+	config     *price.Config
 	doneCh     chan struct{}
 	pairsCache map[string]bool // Optimize filter speed when fetch prices back from OKX
 }
 
-func New(config *config.Config) *OKX {
+func New(config *price.Config) *OKX {
 	pairsCache := make(map[string]bool)
 	for _, pair := range config.Pairs {
 		pairsCache[pair] = true
@@ -34,8 +33,8 @@ func (b *OKX) GetName() string {
 	return "OKX"
 }
 
-func (b *OKX) Active(priceFeedCh chan<- exchange.PriceFeed) {
-	ticker := time.NewTicker(exchange.PriceFeedInterval)
+func (b *OKX) Active(priceFeedCh chan<- price.PriceFeed) {
+	ticker := time.NewTicker(price.PriceFeedInterval)
 	for {
 		select {
 		case <-b.doneCh:
@@ -60,13 +59,13 @@ func (b *OKX) Active(priceFeedCh chan<- exchange.PriceFeed) {
 				continue
 			}
 
-			price, _ := decimal.Parse(ticker.Last)
+			newPrice, _ := decimal.Parse(ticker.Last)
 			ts, _ := strconv.ParseInt(ticker.TS, 10, 64)
-			priceFeedCh <- exchange.PriceFeed{
+			priceFeedCh <- price.PriceFeed{
 				Exchange:    b.GetName(),
 				Pair:        ticker.InstID,
 				TimeInMilli: ts,
-				Price:       price,
+				Price:       newPrice,
 			}
 		}
 

@@ -7,20 +7,19 @@ import (
 	"github.com/charmbracelet/log"
 	"github.com/govalues/decimal"
 	"github.com/hirokisan/bybit/v2"
-	"github.com/strike-finance/strike-v2-backend/services/price/config"
-	"github.com/strike-finance/strike-v2-backend/services/price/exchange"
+	"github.com/strike-finance/strike-v2-backend/services/price"
 )
 
 type Bybit struct {
 	client             *bybit.Client
-	config             *config.Config
+	config             *price.Config
 	pairs              []string
 	doneCh             chan struct{}
 	currentEndpointIdx int
 	pairsCache         map[string]bool // Optimize filter speed when fetch prices back from OKX
 }
 
-func New(config *config.Config) *Bybit {
+func New(config *price.Config) *Bybit {
 	formattedPairs := formatPairs(config.Pairs)
 	pairsCache := make(map[string]bool)
 	for _, pair := range formattedPairs {
@@ -40,8 +39,8 @@ func (b *Bybit) GetName() string {
 	return "Bybit"
 }
 
-func (b *Bybit) Active(priceFeedCh chan<- exchange.PriceFeed) {
-	ticker := time.NewTicker(exchange.PriceFeedInterval)
+func (b *Bybit) Active(priceFeedCh chan<- price.PriceFeed) {
+	ticker := time.NewTicker(price.PriceFeedInterval)
 	for {
 		select {
 		case <-b.doneCh:
@@ -66,12 +65,12 @@ func (b *Bybit) Active(priceFeedCh chan<- exchange.PriceFeed) {
 				continue
 			}
 
-			price, _ := decimal.Parse(item.LastPrice)
-			priceFeedCh <- exchange.PriceFeed{
+			newPrice, _ := decimal.Parse(item.LastPrice)
+			priceFeedCh <- price.PriceFeed{
 				Exchange:    b.GetName(),
 				Pair:        string(item.Symbol),
 				TimeInMilli: time.Now().UnixMilli(),
-				Price:       price,
+				Price:       newPrice,
 			}
 		}
 

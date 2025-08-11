@@ -1,5 +1,5 @@
-// Package config
-package config
+// Package price
+package price
 
 import (
 	"log"

@@ -12,8 +12,8 @@ import (
 	"github.com/strike-finance/strike-v2-backend/services/price/config"
 	"github.com/strike-finance/strike-v2-backend/services/price/exchange"
 	"github.com/strike-finance/strike-v2-backend/services/price/exchange/binance"
+	"github.com/strike-finance/strike-v2-backend/services/price/exchange/bybit"
 	"github.com/strike-finance/strike-v2-backend/services/price/exchange/okx"
-	"github.com/strike-finance/strike-v2-backend/services/price/redis"
 	"github.com/strike-finance/strike-v2-backend/services/sequencer/sequencer"
 )
 
@@ -25,14 +25,11 @@ func main() {
 	// Init config
 	cfg := config.Init()
 
-	// Init redis client
-	redisClient := redis.NewClient(cfg)
-	_ = redisClient
-
 	// Setup all exchanges
 	exchanges := []exchange.Exchange{
 		binance.New(cfg),
 		okx.New(cfg),
+		bybit.New(cfg),
 	}
 
 	// Create priceFeed channel for receiving price feed from all exchanges

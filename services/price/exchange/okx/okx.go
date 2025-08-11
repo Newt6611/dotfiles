@@ -55,6 +55,7 @@ func (b *OKX) Active(priceFeedCh chan<- exchange.PriceFeed) {
 		}
 
 		for _, ticker := range resp.Data {
+			// Filter out pairs not in config
 			if !b.pairsCache[ticker.InstID] {
 				continue
 			}

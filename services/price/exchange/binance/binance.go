@@ -15,6 +15,7 @@ import (
 type Binance struct {
 	client             *binance.Client
 	config             *config.Config
+	pairs              []string
 	doneCh             chan struct{}
 	currentEndpointIdx int
 }
@@ -23,6 +24,7 @@ func New(config *config.Config) *Binance {
 	return &Binance{
 		client:             binance.NewClient("", ""),
 		config:             config,
+		pairs:              formatPairs(config.Pairs),
 		doneCh:             make(chan struct{}),
 		currentEndpointIdx: 0,
 	}
@@ -45,9 +47,10 @@ func (b *Binance) Active(priceFeedCh chan<- exchange.PriceFeed) {
 		endpoint := b.getEndpoint()
 		b.client.SetApiEndpoint(endpoint)
 
-		symbols, err := b.client.NewListPricesService().Symbols(b.config.Pairs).Do(context.Background())
+		symbols, err := b.client.NewListPricesService().Symbols(b.pairs).Do(context.Background())
 		if err != nil {
 			log.Error(err)
+			continue
 		}
 
 		for _, symbol := range symbols {
@@ -70,12 +73,4 @@ func (b *Binance) Shutdown() {
 	default:
 		close(b.doneCh)
 	}
-}
-
-func (b *Binance) getEndpoint() string {
-	b.currentEndpointIdx++
-	if b.currentEndpointIdx >= len(b.config.BinanceEndpoints) {
-		b.currentEndpointIdx = 0
-	}
-	return b.config.BinanceEndpoints[b.currentEndpointIdx]
 }

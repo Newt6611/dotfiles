@@ -1,0 +1,2 @@
+// Package bybit
+package bybit

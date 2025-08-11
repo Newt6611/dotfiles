@@ -11,6 +11,7 @@ type Config struct {
 	Pairs            []string `mapstructure:"PAIRS"`
 	RedisURL         string   `mapstructure:"REDIS_URL"`
 	BinanceEndpoints []string `mapstructure:"BINANCE_ENDPOINTS"`
+	OKXEndpoint      string   `mapstructure:"OKX_ENDPOINT"`
 }
 
 func Init() *Config {

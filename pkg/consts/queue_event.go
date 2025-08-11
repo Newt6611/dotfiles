@@ -10,5 +10,5 @@ const (
 type QueueGroup string
 
 const (
-	AggregatorQueueGruop = "aggregator"
+	PriceQueueGruop = "price_group"
 )

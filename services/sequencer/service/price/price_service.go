@@ -2,6 +2,8 @@ package price
 
 import (
 	"github.com/charmbracelet/log"
+	"github.com/strike-finance/strike-v2-backend/pkg/models"
+	"github.com/strike-finance/strike-v2-backend/pkg/redis"
 	"github.com/strike-finance/strike-v2-backend/services/price"
 	"github.com/strike-finance/strike-v2-backend/services/price/binance"
 	"github.com/strike-finance/strike-v2-backend/services/price/bybit"
@@ -12,12 +14,12 @@ import (
 )
 
 type PriceService struct {
-	config    price.Config
-	exchanges []price.Exchange
-	doneCh    chan struct{}
+	redisClient *redis.Redis
+	exchanges   []price.Exchange
+	doneCh      chan struct{}
 }
 
-func NewService(config *config.Config) *PriceService {
+func NewService(config *config.Config, redis *redis.Redis) *PriceService {
 
 	cfg := parseConfig(config)
 	exchanges := []price.Exchange{
@@ -29,9 +31,9 @@ func NewService(config *config.Config) *PriceService {
 	}
 
 	return &PriceService{
-		config:    cfg,
-		exchanges: exchanges,
-		doneCh:    make(chan struct{}),
+		redisClient: redis,
+		exchanges:   exchanges,
+		doneCh:      make(chan struct{}),
 	}
 }
 
@@ -64,8 +66,14 @@ func (p *PriceService) Active() {
 			}
 
 			log.Infof("Exchange: %s Pair: %s Price: %f", priceFeed.Exchange, priceFeed.Pair, priceFeed.Price)
-			// TODO: Push to stream
-			// PushPriceEvent(sequencerClient, priceFeed)
+
+			// Push to stream
+			p.redisClient.PushPriceEvent(models.PriceEvent{
+				Exchange:  priceFeed.Exchange,
+				Pair:      priceFeed.Pair,
+				Price:     priceFeed.Price,
+				Timestamp: priceFeed.TimeInMilli,
+			})
 		}
 	}
 }

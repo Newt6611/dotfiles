@@ -1,4 +1,4 @@
-package sequencer
+package redis
 
 import (
 	"context"
@@ -10,12 +10,12 @@ import (
 	"github.com/strike-finance/strike-v2-backend/pkg/models"
 )
 
-func (s *Sequencer) PushPriceEvent(priceEvent models.PriceEvent) error {
+func (s *Redis) PushPriceEvent(priceEvent models.PriceEvent) error {
 	jsonValue, err := json.Marshal(priceEvent)
 	if err != nil {
 		return err
 	}
-	return s.redisClient.XAdd(context.Background(), &redis.XAddArgs{
+	return s.client.XAdd(context.Background(), &redis.XAddArgs{
 		ID:     "*", // Let redis generate the ID
 		Stream: consts.PriceQueueEvent,
 		Values: map[string]any{
@@ -24,7 +24,7 @@ func (s *Sequencer) PushPriceEvent(priceEvent models.PriceEvent) error {
 	}).Err()
 }
 
-func (s *Sequencer) PullPriceEvent(fn func(models.PriceEvent), doneCh chan struct{}) {
+func (s *Redis) PullPriceEvent(fn func(models.PriceEvent), doneCh chan struct{}) {
 	for {
 		select {
 		case <-doneCh:
@@ -33,8 +33,8 @@ func (s *Sequencer) PullPriceEvent(fn func(models.PriceEvent), doneCh chan struc
 		default:
 		}
 
-		streams, err := s.redisClient.XReadGroup(context.Background(), &redis.XReadGroupArgs{
-			Group:    consts.AggregatorQueueGruop,
+		streams, err := s.client.XReadGroup(context.Background(), &redis.XReadGroupArgs{
+			Group:    consts.PriceQueueGruop,
 			Consumer: "PriceFeed Consumer",
 			Streams:  []string{consts.PriceQueueEvent, ">"},
 			Block:    0,
@@ -62,12 +62,12 @@ func (s *Sequencer) PullPriceEvent(fn func(models.PriceEvent), doneCh chan struc
 
 		// Delete all messages in the batch with a single command
 		if len(messageIDs) > 0 {
-			if err := s.redisClient.XAck(context.Background(), consts.PriceQueueEvent, consts.AggregatorQueueGruop, messageIDs...).Err(); err != nil {
+			if err := s.client.XAck(context.Background(), consts.PriceQueueEvent, consts.PriceQueueGruop, messageIDs...).Err(); err != nil {
 				log.Error("Failed to ack messages:", err)
 			}
 
 			// Delete all messages in the batch with a single command
-			if _, err := s.redisClient.XDel(context.Background(), consts.PriceQueueEvent, messageIDs...).Result(); err != nil {
+			if _, err := s.client.XDel(context.Background(), consts.PriceQueueEvent, messageIDs...).Result(); err != nil {
 				log.Error("Failed to delete messages:", err)
 			}
 		}

@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/charmbracelet/log"
-	p_redis "github.com/redis/go-redis/v9"
 	"github.com/strike-finance/strike-v2-backend/pkg/redis"
 	"github.com/strike-finance/strike-v2-backend/services/sequencer/config"
 	"github.com/strike-finance/strike-v2-backend/services/sequencer/service"
@@ -19,7 +18,10 @@ func main() {
 	cfg := config.Init()
 
 	// Init redis
-	redisClient := initRedis(cfg)
+	redisClient, err := redis.NewFromURL(cfg.RedisURL)
+	if err != nil {
+		panic(err)
+	}
 
 	services := initAllServices(cfg, redisClient)
 
@@ -38,15 +40,6 @@ func main() {
 	time.Sleep(time.Second * 3)
 
 	log.Info("✅ Shutdown complete")
-}
-
-func initRedis(cfg *config.Config) *redis.Redis {
-	redisOpt, err := p_redis.ParseURL(cfg.RedisURL)
-	if err != nil {
-		panic(err)
-	}
-	r := p_redis.NewClient(redisOpt)
-	return redis.NewRedis(r)
 }
 
 func initAllServices(

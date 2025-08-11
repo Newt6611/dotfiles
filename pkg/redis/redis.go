@@ -12,10 +12,25 @@ type Redis struct {
 	client *redis.Client
 }
 
-func NewRedis(client *redis.Client) *Redis {
-	return &Redis{
+func New(client *redis.Client) *Redis {
+	r := &Redis{
 		client: client,
 	}
+	r.Init()
+	return r
+}
+
+func NewFromURL(url string) (*Redis, error) {
+	opt, err := redis.ParseURL(url)
+	if err != nil {
+		return nil, err
+	}
+
+	r := &Redis{
+		client: redis.NewClient(opt),
+	}
+	r.Init()
+	return r, nil
 }
 
 func (s *Redis) Init() {

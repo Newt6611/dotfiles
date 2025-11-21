@@ -1,38 +1,21 @@
 return {
-	{
-		"neovim/nvim-lspconfig",
-		init = function()
-			local keys = require("lazyvim.plugins.lsp.keymaps").get()
-
-			keys[#keys + 1] = {
-				"rn",
-				function()
-					vim.lsp.buf.rename()
-				end,
-			}
-			keys[#keys + 1] = {
-				"<C-m>",
-				function()
-					vim.lsp.buf.code_action()
-				end,
-			}
-			keys[#keys + 1] = {
-				"<leader>f",
-				function()
-					vim.lsp.buf.implementation()
-				end,
-			}
-            keys[#keys + 1] = {
-                "gt",
-                function ()
-                    vim.lsp.buf.type_definition()
-                end,
-            }
-		end,
-		opts = {
-			inlay_hints = { enabled = false },
-			servers = {
-			},
-		},
-	}
+    "neovim/nvim-lspconfig",
+    opts = {
+        inlay_hints = {
+            enabled = false,
+        },
+        servers = {
+            ['*'] = {
+                keys = {
+                    { "rn", "<cmd>lua vim.lsp.buf.rename()<CR>", has = "definition"},
+                    { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", has = "definition"},
+                    { "<C-m>", "<cmd>lua vim.lsp.buf.code_action()<CR>", has = "definition"},
+                    { "<leader>f", "<cmd>lua vim.lsp.buf.implementation()<CR>", has = "definition"},
+                    { "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", has = "definition"},
+                    -- { "gr", "<cmd>Telescope lsp_references<CR>", has = "definition"},
+                    { "gr", "<cmd>Trouble lsp_references<CR>", has = "definition"},
+                },
+            },
+        },
+    },
 }

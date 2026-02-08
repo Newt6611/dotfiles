@@ -1,3 +1,0 @@
-return {
-	"darrikonn/vim-gofmt"
-}

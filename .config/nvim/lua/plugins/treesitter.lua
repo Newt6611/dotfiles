@@ -1,20 +1,15 @@
-return {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-        ensure_installed = {
-            "html",
-            "lua",
-            "luadoc",
-            "luap",
-            "toml",
-            "typescript",
-            "vim",
-            "yaml",
-            "go",
-            "rust",
-        },
-        indent = {
-            enable = true,
-        }
-    },
-}
+vim.pack.add({
+    { 
+        src = 'https://github.com/nvim-treesitter/nvim-treesitter',
+        branch = 'master'
+    }
+})
+
+require'nvim-treesitter'.install { "lua", "typescript", "go", "rust" }
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { "lua", "typescript", "go", "rust" },
+    callback = function()
+        vim.treesitter.start()
+    end,
+})

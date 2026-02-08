@@ -1,24 +1,13 @@
-return {
-    "github/copilot.vim"
-}
---
--- return {
---     "supermaven-inc/supermaven-nvim",
---     init = function()
---         require("supermaven-nvim").setup({
---             keymaps = {
---                 accept_suggestion = "<C-j>",
---                 clear_suggestion = "<C-]>",
---                 accept_word = "<C-i>",
---             },
---             ignore_filetypes = { cpp = true },
---             color = {
---                 suggestion_color = "#cccccc",
---                 cterm = 244,
---             },
---             log_level = "info", -- set to "off" to disable logging completely
---             disable_inline_completion = false, -- disables inline completion for use with cmp
---             disable_keymaps = false -- disables built in keymaps for more manual control
---         })
---     end,
--- }
+vim.pack.add({
+	{ src = 'https://github.com/github/copilot.vim' }
+})
+
+local map = vim.keymap.set
+local g = vim.g
+
+map('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
+    expr = true,
+    replace_keycodes = false
+})
+
+g.copilot_no_tab_map = true

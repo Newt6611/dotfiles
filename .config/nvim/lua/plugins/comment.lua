@@ -1,20 +1,12 @@
-return {
-  "nvim-mini/mini.comment",
-  event = "VeryLazy",
-  opts = {
-    mappings = {
-      -- Toggle comment (like `gcip` - comment inner paragraph) for both
-      -- Normal and Visual modes
-      comment = "gc",
+vim.pack.add({
+	{ src = 'https://github.com/nvim-mini/mini.comment' }
+})
 
-      -- Toggle comment on current line
-      comment_line = "<leader>c",
-
-      -- Toggle comment on visual selection
-      comment_visual = "<leader>c",
-
-      -- Define 'comment' textobject (like `dgc` - delete whole comment block)
-      textobject = "gc",
-    },
-  },
-}
+require('mini.comment').setup({
+	mappings = {
+		comment = '<leader>c',
+		comment_line = '<leader>c',
+		comment_visual = '<leader>c',
+		textobject = '<leader>c',
+	},
+})

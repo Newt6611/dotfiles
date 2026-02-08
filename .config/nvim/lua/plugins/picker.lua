@@ -1,6 +1,5 @@
-
 vim.pack.add({
-	{ src = 'https://github.com/nvim-mini/mini.pick', checkout = 'stable' }
+  { src = 'https://github.com/nvim-mini/mini.pick', checkout = 'stable' }
 })
 
 local pick = require('mini.pick')

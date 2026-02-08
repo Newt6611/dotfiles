@@ -1,14 +1,14 @@
 vim.pack.add({
-	{ src = 'https://github.com/folke/tokyonight.nvim' }
+  { src = 'https://github.com/folke/tokyonight.nvim' }
 })
 
 require('tokyonight').setup({
-	style = "night",
-	transparent = true,
-	styles = {
-		sidebars = "transparent",
-		floats = "transparent",
-	},
+  style = "night",
+  transparent = true,
+  styles = {
+    sidebars = "transparent",
+    floats = "transparent",
+  },
 })
 
 vim.cmd[[colorscheme tokyonight]]

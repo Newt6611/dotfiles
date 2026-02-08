@@ -6,4 +6,4 @@ require('gitsigns').setup()
 
 local map = vim.keymap.set
 
-map({ "n", "v" }, "<leader>r", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+map({ "n", "v" }, "<leader>r", ":Gitsigns reset_hunk<CR>", { desc = "Reset Hunk" })

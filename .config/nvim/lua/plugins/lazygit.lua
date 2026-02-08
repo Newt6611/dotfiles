@@ -4,4 +4,4 @@ vim.pack.add({
 
 local map = vim.keymap.set
 
-map('n', "<leader>gh", ":LazyGit<CR>", { desc = "Lazygit" })
+map('n', "<leader>gg", ":LazyGit<CR>", { desc = "Lazygit" })

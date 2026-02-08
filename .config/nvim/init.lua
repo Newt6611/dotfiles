@@ -15,6 +15,7 @@ require('plugins.trouble')
 require('plugins.ai')
 require('plugins.whichkey')
 require('plugins.diagnostic')
+require('plugins.lualine')
 
 -- git
 require('plugins.lazygit')

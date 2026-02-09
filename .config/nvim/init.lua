@@ -16,6 +16,8 @@ require('plugins.ai')
 require('plugins.whichkey')
 require('plugins.diagnostic')
 require('plugins.lualine')
+require('plugins.cursor-word')
+require('plugins.indent')
 
 -- git
 require('plugins.lazygit')

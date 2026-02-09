@@ -24,6 +24,10 @@
       "rev": "1ce96a464fdbc24208e24c117e2021794259005d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
+    "indent-blankline.nvim": {
+      "rev": "005b56001b2cb30bfa61b7986bc50657816ba4ba",
+      "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
+    },
     "lazygit.nvim": {
       "rev": "a04ad0dbc725134edbee3a5eea29290976695357",
       "src": "https://github.com/kdheepak/lazygit.nvim"
@@ -43,6 +47,10 @@
     "mini.completion": {
       "rev": "4d451f82f193f6751719935a63d16ccb79a76e0b",
       "src": "https://github.com/nvim-mini/mini.completion"
+    },
+    "mini.cursorword": {
+      "rev": "dda0f57d55bb1fa19423b7201b2ba892c7d2bb3c",
+      "src": "https://github.com/nvim-mini/mini.cursorword"
     },
     "mini.icons": {
       "rev": "efc85e42262cd0c9e1fdbf806c25cb0be6de115c",

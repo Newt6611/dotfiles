@@ -13,6 +13,7 @@ o.swapfile = false
 o.clipboard = 'unnamedplus'
 o.winborder = 'rounded'
 o.signcolumn = 'yes'
+o.wrap = false
 
 -- Number of spaces that a <Tab> in the file counts for
 o.tabstop = 4

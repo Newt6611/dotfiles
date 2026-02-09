@@ -15,6 +15,10 @@ map('n', 'N', 'Nzzzv')
 
 map('n', '<space>e', vim.diagnostic.open_float, { noremap = true, silent = true, buffer = bufnr })
 
+map('n', '<leader>xx', function()
+  vim.diagnostic.setqflist()
+end, { desc = 'Diagnostics (Quickfix)' })
+
 map('n', '<leader>em', function()
   -- Open a new empty buffer
   vim.cmd('new')

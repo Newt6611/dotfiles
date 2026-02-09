@@ -2,7 +2,7 @@ vim.pack.add {
   { src = 'https://github.com/neovim/nvim-lspconfig' },
 }
 
-vim.lsp.enable({ 'gopls', 'lua_ls', 'ts_ls' })
+vim.lsp.enable({ 'gopls', 'lua_ls', 'ts_ls', 'tombi' })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)

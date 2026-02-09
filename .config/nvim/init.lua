@@ -18,6 +18,7 @@ require('plugins.diagnostic')
 require('plugins.lualine')
 require('plugins.cursor-word')
 require('plugins.indent')
+require('plugins.harpoon')
 
 -- git
 require('plugins.lazygit')

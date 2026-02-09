@@ -3,3 +3,6 @@ vim.pack.add({
 })
 
 require('trouble').setup()
+
+local map = vim.keymap.set
+map('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<CR>', { desc = 'Diagnostics (Trouble)', })

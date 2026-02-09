@@ -69,10 +69,6 @@
       "rev": "4ad37ade984e69c43227b82ccdca5a92a22886de",
       "src": "https://github.com/nvim-mini/mini.pick"
     },
-    "neogit": {
-      "rev": "73870229977fdd8747025820e15e98cfde787b9c",
-      "src": "https://github.com/NeogitOrg/neogit"
-    },
     "nvim-colorizer.lua": {
       "rev": "a065833f35a3a7cc3ef137ac88b5381da2ba302e",
       "src": "https://github.com/norcalli/nvim-colorizer.lua"

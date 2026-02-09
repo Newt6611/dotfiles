@@ -22,7 +22,6 @@ require('plugins.harpoon')
 
 -- git
 require('plugins.lazygit')
-require('plugins.neogit')
 require('plugins.gitsigns')
 
 -- lsp

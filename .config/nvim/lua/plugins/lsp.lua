@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       desc = 'Code action',
     })
 
-    map('n', 'gr', '<cmd>Trouble lsp_references<CR>', {
+    map('n', '<leader>gr', '<cmd>Trouble lsp_references<CR>', {
       buffer = args.buf,
       desc = 'Find references (LSP)',
     })

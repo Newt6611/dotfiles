@@ -3,7 +3,7 @@ vim.pack.add({
 })
 
 require('tokyonight').setup({
-  style = "night",
+  style = "storm",
   transparent = true,
   styles = {
     sidebars = "transparent",

@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local opts = { buffer = args.buf }
     local map = vim.keymap.set
 
-    map('n', 'gd', function() vim.lsp.buf.definition() end, {
+    map('n', 'gd', function() Snacks.picker.lsp_definitions() end, {
       buffer = args.buf,
       desc = 'Go to definition (LSP)',
     })
@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       desc = 'Code action',
     })
 
-    map('n', '<leader>gr', function() vim.lsp.buf.references() end, {
+    map('n', 'grr', function() Snacks.picker.lsp_references() end, {
       buffer = args.buf,
       desc = 'Find references (LSP)',
     })
@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       desc = 'Rename symbol',
     })
 
-    map('n', 'gt', function() vim.lsp.buf.type_definition() end, {
+    map('n', 'gt', function() Snacks.picker.lsp_type_definitions() end, {
       buffer = args.buf,
       desc = 'Go to type definition (LSP)',
     })
@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       desc = 'Format buffer',
     })
 
-    map('n', '<leader>ff', function() vim.lsp.buf.implementation() end, {
+    map('n', '<leader>ff', function() Snacks.picker.lsp_implementations() end, {
       buffer = args.buf,
       desc = 'Go to implementation (LSP)',
     })

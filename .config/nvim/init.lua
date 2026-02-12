@@ -5,7 +5,6 @@ require('configs.autocmd')
 -- plugins
 require('plugins.tokyonight')
 require('plugins.oil')
-require('plugins.picker')
 require('plugins.icon')
 require('plugins.pair')
 require('plugins.comment')
@@ -16,14 +15,11 @@ require('plugins.whichkey')
 require('plugins.diagnostic')
 require('plugins.lualine')
 require('plugins.cursor-word')
-require('plugins.indent')
 require('plugins.harpoon')
 require('plugins.fidget')
-require('plugins.nvim-bqf')
-
+require('plugins.snacks')
 
 -- git
-require('plugins.lazygit')
 require('plugins.gitsigns')
 
 -- lsp

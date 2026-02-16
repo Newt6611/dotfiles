@@ -11,7 +11,7 @@ map('n', '<C-u>', '<C-u>zz')
 map('n', 'n', 'nzzzv')
 map('n', 'N', 'Nzzzv')
 
-map('n', '<space>e', vim.diagnostic.open_float, { noremap = true, silent = true, buffer = bufnr })
+map('n', 'E', vim.diagnostic.open_float, { noremap = true, silent = true, buffer = bufnr })
 
 map('n', 'zj', ':cnext<CR>', { noremap = true, silent = true })
 map('n', 'zk', ':cprev<CR>', { noremap = true, silent = true })

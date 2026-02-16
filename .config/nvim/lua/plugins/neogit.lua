@@ -1,9 +1,9 @@
+
 vim.pack.add({
   { src = 'https://github.com/NeogitOrg/neogit' }
 })
 
 require('neogit').setup({
-  graph_style = "unicode",
   floating = {
     relative = "editor",
     width = 0.9,
@@ -13,5 +13,7 @@ require('neogit').setup({
   },
 })
 
+
 local map = vim.keymap.set
-map('n', '<leader>gh', '<CMD>Neogit kind=floating<CR>', { desc = 'Open Neogit UI' })
+
+map('n', '<leader>gh', ':Neogit kind=floating<CR>', { desc = 'Open Neogit' })

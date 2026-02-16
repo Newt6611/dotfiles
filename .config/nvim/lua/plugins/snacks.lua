@@ -23,4 +23,4 @@ map('n', "<leader>ps", function() Snacks.picker.grep() end, { desc = "Grep" })
 map('n', "<leader>gd", function() Snacks.picker.git_diff() end, { desc = "Git Diff (Hunks)" })
 
 map('n', "<leader>gl", function() Snacks.lazygit.log() end, { desc = "LazyGit Log" })
-map('n', "<leader>gg", function() Snacks.lazygit() end, { desc = "LazyGit" })
+map('n', "<leader>lg", function() Snacks.lazygit() end, { desc = "LazyGit" })

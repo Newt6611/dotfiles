@@ -18,6 +18,7 @@ require('plugins.harpoon')
 require('plugins.fidget')
 require('plugins.snacks')
 require('plugins.undotree')
+require('plugins.markdown')
 
 -- git
 require('plugins.gitsigns')

@@ -16,4 +16,4 @@ require('neogit').setup({
 
 local map = vim.keymap.set
 
-map('n', '<leader>gh', ':Neogit kind=floating<CR>', { desc = 'Open Neogit' })
+map('n', '<leader>gh', ':Neogit kind=floating<CR>', { desc = 'Open Neogit', silent = true })

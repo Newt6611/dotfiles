@@ -1,7 +1,7 @@
 
 font-family = JetBrainsMono Nerd Font Mono
 
-theme = Adventure
+theme = Catppuccin Mocha
 
 font-size = 24
 
@@ -10,7 +10,7 @@ shell-integration-features = no-cursor
 cursor-style = block
 
 # background-opacity = 0.9
-background-blur-radius = 15
+# background-blur-radius = 15
 
 window-decoration = false
 

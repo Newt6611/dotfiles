@@ -1,4 +1,3 @@
-
 local o = vim.opt
 local g = vim.g
 
@@ -24,4 +23,4 @@ o.expandtab = true
 -- Number of spaces that a <Tab> counts for while performing editing operations
 o.softtabstop = 4
 
-g.mapleader = " "
+g.mapleader = ' '

@@ -1,5 +1,4 @@
-vim.pack.add({
-  { src = 'https://github.com/nvim-mini/mini.icons' }
-})
-
-require('mini.icons').setup()
+return {
+  'nvim-mini/mini.icons',
+  opts = {}
+}

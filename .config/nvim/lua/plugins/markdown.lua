@@ -1,4 +1,4 @@
-vim.pack.add({
-  { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" }
-})
-require('render-markdown').setup()
+return {
+  'MeanderingProgrammer/render-markdown.nvim',
+  opts = {}
+}

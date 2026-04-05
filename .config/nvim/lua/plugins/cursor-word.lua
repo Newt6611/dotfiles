@@ -1,6 +1,4 @@
-
-vim.pack.add({
-  { src = 'https://github.com/nvim-mini/mini.cursorword' }
-})
-
-require('mini.cursorword').setup()
+return {
+    'nvim-mini/mini.cursorword',
+    opts = {},
+}

@@ -1,15 +1,12 @@
-vim.pack.add({
-  {
-    src = 'https://github.com/nvim-treesitter/nvim-treesitter',
-    branch = 'master'
+return {
+  'nvim-treesitter/nvim-treesitter',
+  build = ':TSUpdate',
+  lazy = false,
+  opts = {
+    parser_install_dir = vim.fn.stdpath('data') .. '/site',
+    ensure_installed = { 'lua', 'typescript', 'go', 'rust', 'solidity' },
+    highlight = {
+      enable = true,
+    },
   },
-})
-
-require 'nvim-treesitter'.install { "lua", "typescript", "go", "rust" }
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { "lua", "typescript", "go", "rust" },
-  callback = function()
-    vim.treesitter.start()
-  end,
-})
+}

@@ -1,32 +1,4 @@
-require('configs.option')
-require('configs.keymap')
-require('configs.autocmd')
-
--- plugins
-require('plugins.tokyonight')
-require('plugins.oil')
-require('plugins.icon')
-require('plugins.comment')
-require('plugins.flash')
-require('plugins.todo-comments')
-require('plugins.ai')
-require('plugins.whichkey')
-require('plugins.diagnostic')
-require('plugins.lualine')
-require('plugins.cursor-word')
-require('plugins.harpoon')
-require('plugins.fidget')
-require('plugins.snacks')
-require('plugins.undotree')
-require('plugins.markdown')
-
--- git
-require('plugins.gitsigns')
-require('plugins.neogit')
-
--- lsp
-require('plugins.cmp')
-require('plugins.treesitter')
-require('plugins.mason')
-require('plugins.lsp')
-require('plugins.rustaceanvim')
+require('configs.autocmds')
+require('configs.options')
+require('configs.keymaps')
+require('configs.lazy')

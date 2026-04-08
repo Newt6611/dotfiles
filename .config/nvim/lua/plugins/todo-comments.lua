@@ -1,3 +1,7 @@
 return {
-  'folke/todo-comments.nvim'
+  {
+    'folke/todo-comments.nvim',
+    opts = {},
+  },
+  {'nvim-lua/plenary.nvim'},
 }

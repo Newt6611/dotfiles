@@ -1,7 +1,7 @@
 
 font-family = JetBrainsMono Nerd Font Mono
 
-theme = Catppuccin Mocha
+theme = TokyoNight Night
 
 font-size = 24
 
@@ -9,12 +9,12 @@ shell-integration-features = no-cursor
 
 cursor-style = block
 
-# background-opacity = 0.9
+# background-opacity = 0.8
 # background-blur-radius = 15
 
 window-decoration = false
 
 window-save-state = always
 
-initial-command = /bin/zsh -l -c 'zellij -l welcome'
+# initial-command = /bin/zsh -l -c 'zellij -l welcome'
 keybind = shift+enter=text:\x1b\r

@@ -457,3 +457,9 @@ keybinding:
     bulkMenu: b
   commitMessage:
     commitMenu: <c-o>
+  # git diff
+  pagers:
+    - pager: delta --dark --paging=never
+    - pager: ydiff -p cat -s --wrap --width={{columnWidth}}
+      colorArg: never
+    - externalDiffCommand: difft --color=always

@@ -40,3 +40,9 @@ map('n', '<leader>em', function()
   -- Move the cursor to the last line of the buffer
   vim.cmd('normal! G')
 end, { desc = 'Open message history' })
+
+-- Built in undotree
+map('n', '<leader>ud', function ()
+  vim.cmd.packadd('nvim.undotree')
+  require('undotree').open()
+end, { desc = 'Toggle Builtin Undotree'})

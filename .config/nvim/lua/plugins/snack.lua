@@ -39,15 +39,10 @@ return {
       function() require('snacks').picker.git_diff() end,
       desc = 'Git Diff (Hunks)',
     },
-    {
-      '<leader>gl',
-      function() require('snacks').lazygit.log() end,
-      desc = 'LazyGit Log',
-    },
-    {
-      '<leader>gg',
-      function() require('snacks').lazygit() end,
-      desc = 'LazyGit',
-    },
+    -- {
+    --   '<leader>gl',
+    --   function() require('snacks').lazygit.log() end,
+    --   desc = 'LazyGit Log',
+    -- },
   },
 }

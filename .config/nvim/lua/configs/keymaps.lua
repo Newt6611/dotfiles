@@ -17,10 +17,6 @@ map('n', 'zj', ':cnext<CR>', { noremap = true, silent = true })
 map('n', 'zk', ':cprev<CR>', { noremap = true, silent = true })
 map('n', 'zo', ':copen<CR>', { noremap = true, silent = true })
 
-map('n', '<leader>xx', function()
-  vim.diagnostic.setqflist()
-end, { desc = 'Diagnostics (Quickfix)' })
-
 map('n', '<leader>em', function()
   -- Open a new empty buffer
   vim.cmd('new')

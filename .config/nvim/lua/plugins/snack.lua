@@ -3,15 +3,24 @@ return {
   opts = {
     picker = {
       enabled = true,
-    },
-    indent = {
-      enabled = true,
-      animate = {
-        enabled = false,
+      win = {
+        -- input window
+        input = {
+          keys = {
+            ["K"] = { "preview_scroll_up", mode = { "i", "n" } },
+            ["J"] = { "preview_scroll_down", mode = { "i", "n" } },
+          },
+        },
+        indent = {
+          enabled = true,
+          animate = {
+            enabled = false,
+          },
+        },
+        lazygit = {
+          enabled = true,
+        },
       },
-    },
-    lazygit = {
-      enabled = true,
     },
   },
   keys = {

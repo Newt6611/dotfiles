@@ -24,5 +24,21 @@ return {
       end,
       desc = 'Blam line'
     },
+    {
+      '<leader>j',
+      mode = { 'n' },
+      function()
+        require('gitsigns').nav_hunk('next')
+      end,
+      desc = 'Next hunk'
+    },
+    {
+      '<leader>k',
+      mode = { 'n' },
+      function()
+        require('gitsigns').nav_hunk('prev')
+      end,
+      desc = 'Prev hunk'
+    },
   },
 }

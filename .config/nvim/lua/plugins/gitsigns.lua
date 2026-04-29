@@ -17,6 +17,14 @@ return {
       desc = 'Reset Hunk',
     },
     {
+      '<leader>s',
+      mode = { 'n', 'v' },
+      function()
+        require('gitsigns').stage_hunk()
+      end,
+      desc = 'Stage Hunk',
+    },
+    {
       '<leader>b',
       mode = { 'n' },
       function()

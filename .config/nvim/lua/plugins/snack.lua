@@ -9,6 +9,8 @@ return {
           keys = {
             ["K"] = { "preview_scroll_up", mode = { "i", "n" } },
             ["J"] = { "preview_scroll_down", mode = { "i", "n" } },
+            ["L"] = { "preview_scroll_right", mode = { "i", "n" } },
+            ["H"] = { "preview_scroll_left", mode = { "i", "n" } },
           },
         },
         indent = {

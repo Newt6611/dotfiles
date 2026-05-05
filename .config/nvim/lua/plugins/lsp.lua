@@ -1,18 +1,13 @@
 return {
   {
     'neovim/nvim-lspconfig',
-    ft = { 'go', 'lua', 'typescript' },
+    ft = { 'go', 'lua', 'typescript', 'sol', 'solidity' },
     config = function()
-      -- vim.lsp.config('gopls', {})
-      -- vim.lsp.config('lua_ls', {})
-      -- vim.lsp.config('ts_ls', {})
-      -- vim.lsp.config('tombi', {})
-
       vim.lsp.enable({
+        'solidity_ls_nomicfoundation',
         'gopls',
         'lua_ls',
         'ts_ls',
-        'tombi',
       })
     end,
 
